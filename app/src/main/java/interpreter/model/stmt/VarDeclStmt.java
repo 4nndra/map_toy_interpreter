@@ -1,0 +1,34 @@
+package interpreter.model.stmt;
+
+import interpreter.exceptions.MyException;
+import interpreter.model.PrgState;
+import interpreter.model.adt.IDictionary;
+import interpreter.model.type.IType;
+import interpreter.model.value.IValue;
+
+public class VarDeclStmt implements IStmt {
+    private final String name;
+    private final IType type;
+
+    public VarDeclStmt(String name, IType type) {
+        this.name = name;
+        this.type = type;
+    }
+
+    @Override
+    public PrgState execute(PrgState state) throws MyException {
+        IDictionary<String, IValue> symTable = state.getSymTable();
+
+        if (symTable.isDefined(name)) {
+            throw new MyException("Variable already declared: " + name);
+        }
+
+        symTable.put(name, type.defaultValue());
+        return state;
+    }
+
+    @Override
+    public String toString() {
+        return "var " + name + ": " + type;
+    }
+}
