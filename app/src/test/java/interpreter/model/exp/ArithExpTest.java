@@ -1,6 +1,6 @@
-
 package interpreter.model.exp;
 
+import interpreter.exceptions.ExpressionException;
 import interpreter.exceptions.MyException;
 import interpreter.model.adt.MyDictionary;
 import interpreter.model.value.BoolValue;
@@ -69,7 +69,7 @@ class ArithExpTest {
         );
 
         assertThrows(
-                MyException.class,
+                ExpressionException.class,
                 () -> exp.eval(createSymTable())
         );
     }
@@ -83,7 +83,7 @@ class ArithExpTest {
         );
 
         assertThrows(
-                MyException.class,
+                ExpressionException.class,
                 () -> exp.eval(createSymTable())
         );
     }

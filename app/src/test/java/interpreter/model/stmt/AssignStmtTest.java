@@ -1,13 +1,13 @@
 package interpreter.model.stmt;
 
 import interpreter.exceptions.MyException;
+import interpreter.exceptions.StatementException;
 import interpreter.model.PrgState;
 import interpreter.model.adt.MyDictionary;
 import interpreter.model.adt.MyList;
 import interpreter.model.adt.MyStack;
 import interpreter.model.exp.ValueExp;
 import interpreter.model.type.IntType;
-import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
 import org.junit.jupiter.api.Test;
 
@@ -41,7 +41,7 @@ class AssignStmtTest {
         AssignStmt stmt = new AssignStmt("x", new ValueExp(new IntValue(10)));
 
         assertThrows(
-                MyException.class,
+                StatementException.class,
                 () -> stmt.execute(state)
         );
     }
@@ -52,10 +52,13 @@ class AssignStmtTest {
 
         new VarDeclStmt("x", new IntType()).execute(state);
 
-        AssignStmt stmt = new AssignStmt("x", new ValueExp(new interpreter.model.value.BoolValue(true)));
+        AssignStmt stmt = new AssignStmt(
+                "x",
+                new ValueExp(new interpreter.model.value.BoolValue(true))
+        );
 
         assertThrows(
-                MyException.class,
+                StatementException.class,
                 () -> stmt.execute(state)
         );
     }

@@ -1,15 +1,14 @@
 package interpreter.model.stmt;
 
 import interpreter.exceptions.MyException;
+import interpreter.exceptions.StatementException;
 import interpreter.model.PrgState;
 import interpreter.model.adt.MyDictionary;
 import interpreter.model.adt.MyList;
 import interpreter.model.adt.MyStack;
-import interpreter.model.exp.ValueExp;
 import interpreter.model.type.BoolType;
 import interpreter.model.type.IntType;
 import interpreter.model.value.BoolValue;
-import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
 import org.junit.jupiter.api.Test;
 
@@ -30,8 +29,7 @@ class VarDeclStmtTest {
     void testDeclareIntegerVariable() throws MyException {
         PrgState state = createState();
 
-        VarDeclStmt stmt = new VarDeclStmt("x", new IntType());
-        stmt.execute(state);
+        new VarDeclStmt("x", new IntType()).execute(state);
 
         assertEquals(new IntValue(0), state.getSymTable().lookup("x"));
     }
@@ -40,8 +38,7 @@ class VarDeclStmtTest {
     void testDeclareBooleanVariable() throws MyException {
         PrgState state = createState();
 
-        VarDeclStmt stmt = new VarDeclStmt("b", new BoolType());
-        stmt.execute(state);
+        new VarDeclStmt("b", new BoolType()).execute(state);
 
         assertEquals(new BoolValue(false), state.getSymTable().lookup("b"));
     }
@@ -53,7 +50,7 @@ class VarDeclStmtTest {
         new VarDeclStmt("x", new IntType()).execute(state);
 
         assertThrows(
-                MyException.class,
+                StatementException.class,
                 () -> new VarDeclStmt("x", new IntType()).execute(state)
         );
     }

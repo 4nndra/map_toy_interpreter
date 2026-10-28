@@ -9,6 +9,7 @@ import interpreter.model.exp.ValueExp;
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.IntValue;
 import org.junit.jupiter.api.Test;
+import interpreter.exceptions.StatementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -81,7 +82,7 @@ class IfStmtTest {
         );
 
         assertThrows(
-                MyException.class,
+                StatementException.class,
                 () -> stmt.execute(state)
         );
     }
