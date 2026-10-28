@@ -14,9 +14,9 @@ public class Controller {
     }
 
     public PrgState oneStep() throws MyException {
-        PrgState state = repository.getProgram();
+        PrgState state = repository.getCrtPrg();
 
-        if (state.getExeStack().isEmpty()) {
+        if (state == null || state.getExeStack().isEmpty()) {
             throw new StatementException("Program execution stack is empty");
         }
 
@@ -27,7 +27,11 @@ public class Controller {
     }
 
     public PrgState allStep() throws MyException {
-        PrgState state = repository.getProgram();
+        PrgState state = repository.getCrtPrg();
+
+        if (state == null) {
+            throw new StatementException("No program state available");
+        }
 
         System.out.println("Initial state:");
         System.out.println(state);
