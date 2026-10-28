@@ -9,6 +9,8 @@ import interpreter.model.stmt.*;
 import interpreter.model.type.BoolType;
 import interpreter.model.type.IntType;
 import interpreter.model.value.IValue;
+import interpreter.model.value.IntValue;
+import interpreter.model.value.BoolValue;
 
 public class Examples {
 
@@ -16,60 +18,70 @@ public class Examples {
         IStmt program = new CompStmt(
                 new VarDeclStmt("v", new IntType()),
                 new CompStmt(
-                        new AssignStmt("v", new ValueExp(new interpreter.model.value.IntValue(2))),
+                        new AssignStmt("v", new ValueExp(new IntValue(2))),
                         new PrintStmt(new VarExp("v"))
                 )
         );
 
-        return new PrgState(
-                new MyStack<>(),
-                new MyDictionary<>(),
-                new MyList<>(),
-                program
-        );
+        return createState(program);
     }
 
     public static PrgState example2() {
         IStmt program = new CompStmt(
                 new VarDeclStmt("a", new IntType()),
                 new CompStmt(
-                        new AssignStmt("a", new ArithExp(
-                                ArithOp.ADD,
-                                new ValueExp(new interpreter.model.value.IntValue(10)),
-                                new ValueExp(new interpreter.model.value.IntValue(8))
-                        )),
-                        new PrintStmt(new VarExp("a"))
-                )
-        );
-
-        return new PrgState(
-                new MyStack<>(),
-                new MyDictionary<>(),
-                new MyList<>(),
-                program
-        );
-    }
-
-    public static PrgState example3() {
-        IStmt program = new CompStmt(
-                new VarDeclStmt("b", new BoolType()),
-                new CompStmt(
-                        new AssignStmt("b", new LogicExp(
-                                LogicOp.AND,
-                                new ValueExp(new interpreter.model.value.BoolValue(true)),
-                                new ValueExp(new interpreter.model.value.BoolValue(true))
-                        )),
-                        new IfStmt(
-                                new VarExp("b"),
-                                new PrintStmt(new ValueExp(new interpreter.model.value.IntValue(2))),
-                                new PrintStmt(new ValueExp(new interpreter.model.value.IntValue(0)))
+                        new VarDeclStmt("b", new IntType()),
+                        new CompStmt(
+                                new AssignStmt("a", new ArithExp(
+                                        ArithOp.ADD,
+                                        new ValueExp(new IntValue(2)),
+                                        new ArithExp(
+                                                ArithOp.MUL,
+                                                new ValueExp(new IntValue(3)),
+                                                new ValueExp(new IntValue(5))
+                                        )
+                                )),
+                                new CompStmt(
+                                        new AssignStmt("b", new ArithExp(
+                                                ArithOp.ADD,
+                                                new VarExp("a"),
+                                                new ValueExp(new IntValue(1))
+                                        )),
+                                        new PrintStmt(new VarExp("b"))
+                                )
                         )
                 )
         );
 
+        return createState(program);
+    }
+
+    public static PrgState example3() {
+        IStmt program = new CompStmt(
+                new VarDeclStmt("a", new BoolType()),
+                new CompStmt(
+                        new VarDeclStmt("v", new IntType()),
+                        new CompStmt(
+                                new AssignStmt("a", new ValueExp(new BoolValue(true))),
+                                new CompStmt(
+                                        new IfStmt(
+                                                new VarExp("a"),
+                                                new AssignStmt("v", new ValueExp(new IntValue(2))),
+                                                new AssignStmt("v", new ValueExp(new IntValue(3)))
+                                        ),
+                                        new PrintStmt(new VarExp("v"))
+                                )
+                        )
+                )
+        );
+
+        return createState(program);
+    }
+
+    private static PrgState createState(IStmt program) {
         return new PrgState(
                 new MyStack<>(),
-                new MyDictionary<>(),
+                new MyDictionary<String, IValue>(),
                 new MyList<>(),
                 program
         );

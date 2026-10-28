@@ -1,42 +1,44 @@
 package interpreter.model.stmt;
 
 import interpreter.exceptions.MyException;
+import interpreter.exceptions.StatementException;
 import interpreter.model.PrgState;
-import interpreter.model.adt.IDictionary;
 import interpreter.model.exp.IExp;
 import interpreter.model.type.IType;
 import interpreter.model.value.IValue;
 
 public class AssignStmt implements IStmt {
-    private final String name;
-    private final IExp expression;
+    private final String id;
+    private final IExp exp;
 
-    public AssignStmt(String name, IExp expression) {
-        this.name = name;
-        this.expression = expression;
+    public AssignStmt(String id, IExp exp) {
+        this.id = id;
+        this.exp = exp;
     }
 
     @Override
     public PrgState execute(PrgState state) throws MyException {
-        IDictionary<String, IValue> symTable = state.getSymTable();
-
-        if (!symTable.isDefined(name)) {
-            throw new MyException("Variable not declared: " + name);
+        if (!state.getSymTable().isDefined(id)) {
+            throw new StatementException(
+                    "Variable '" + id + "' is not declared"
+            );
         }
 
-        IValue value = expression.eval(symTable);
-        IType declaredType = symTable.lookup(name).getType();
+        IValue value = exp.eval(state.getSymTable());
+        IType declaredType = state.getSymTable().lookup(id).getType();
 
         if (!declaredType.equals(value.getType())) {
-            throw new MyException("Type mismatch assigning to " + name);
+            throw new StatementException(
+                    "Type mismatch when assigning to variable '" + id + "'"
+            );
         }
 
-        symTable.update(name, value);
+        state.getSymTable().update(id, value);
         return state;
     }
 
     @Override
     public String toString() {
-        return name + " = " + expression;
+        return id + " = " + exp;
     }
 }

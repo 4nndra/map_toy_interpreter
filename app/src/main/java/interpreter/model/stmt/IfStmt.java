@@ -1,6 +1,7 @@
 package interpreter.model.stmt;
 
 import interpreter.exceptions.MyException;
+import interpreter.exceptions.StatementException;
 import interpreter.model.PrgState;
 import interpreter.model.exp.IExp;
 import interpreter.model.value.BoolValue;
@@ -22,7 +23,9 @@ public class IfStmt implements IStmt {
         IValue value = condition.eval(state.getSymTable());
 
         if (!(value instanceof BoolValue boolValue)) {
-            throw new MyException("If condition must be boolean");
+            throw new StatementException(
+                    "If condition must be Boolean"
+            );
         }
 
         if (boolValue.getValue()) {
@@ -36,6 +39,7 @@ public class IfStmt implements IStmt {
 
     @Override
     public String toString() {
-        return "if (" + condition + ") then (" + thenStmt + ") else (" + elseStmt + ")";
+        return "if (" + condition + ") then (" + thenStmt
+                + ") else (" + elseStmt + ")";
     }
 }

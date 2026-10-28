@@ -1,3 +1,4 @@
+
 package interpreter.controller;
 
 import interpreter.exceptions.MyException;
@@ -28,8 +29,17 @@ public class Controller {
     public PrgState allStep() throws MyException {
         PrgState state = repository.getProgram();
 
+        // Display the initial program state.
+        System.out.println("Initial state:");
+        System.out.println(state);
+
+        // Execute one statement at a time.
         while (!state.getExeStack().isEmpty()) {
             oneStep();
+
+            // Display the state after each step.
+            System.out.println("\nState after step:");
+            System.out.println(state);
         }
 
         return state;
