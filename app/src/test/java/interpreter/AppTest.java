@@ -1,5 +1,6 @@
 package interpreter;
 
+import interpreter.view.Examples;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;

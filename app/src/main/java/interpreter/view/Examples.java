@@ -1,4 +1,4 @@
-package interpreter;
+package interpreter.view;
 
 import interpreter.model.PrgState;
 import interpreter.model.adt.MyDictionary;

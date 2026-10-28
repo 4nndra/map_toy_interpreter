@@ -13,20 +13,16 @@ public class Controller {
         this.repository = repository;
     }
 
-    public PrgState oneStep() throws MyException {
-        PrgState state = repository.getCrtPrg();
-
+    public PrgState oneStep(PrgState state) throws MyException {
         if (state == null || state.getExeStack().isEmpty()) {
             throw new StatementException("Program execution stack is empty");
         }
 
         IStmt currentStatement = state.getExeStack().pop();
-        currentStatement.execute(state);
-
-        return state;
+        return currentStatement.execute(state);
     }
 
-    public PrgState allStep() throws MyException {
+    public void allStep() throws MyException {
         PrgState state = repository.getCrtPrg();
 
         if (state == null) {
@@ -37,12 +33,10 @@ public class Controller {
         System.out.println(state);
 
         while (!state.getExeStack().isEmpty()) {
-            oneStep();
+            oneStep(state);
 
             System.out.println("\nState after step:");
             System.out.println(state);
         }
-
-        return state;
     }
 }
