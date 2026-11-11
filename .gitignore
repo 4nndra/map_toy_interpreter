@@ -1,8 +1,3 @@
-.idea/
-*.iml
-out/
-.vscode/
-.DS_Store
-.gradle/
-build/
-app/build/
+*.log
+log*.txt
+app/test.in
