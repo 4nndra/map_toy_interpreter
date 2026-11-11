@@ -1,14 +1,10 @@
 package interpreter.view;
 
 import interpreter.model.PrgState;
-import interpreter.model.adt.MyDictionary;
-import interpreter.model.adt.MyList;
-import interpreter.model.adt.MyStack;
 import interpreter.model.exp.*;
 import interpreter.model.stmt.*;
 import interpreter.model.type.BoolType;
 import interpreter.model.type.IntType;
-import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
 import interpreter.model.value.BoolValue;
 
@@ -79,11 +75,6 @@ public class Examples {
     }
 
     private static PrgState createState(IStmt program) {
-        return new PrgState(
-                new MyStack<>(),
-                new MyDictionary<String, IValue>(),
-                new MyList<>(),
-                program
-        );
+        return PrgState.of(program);
     }
 }

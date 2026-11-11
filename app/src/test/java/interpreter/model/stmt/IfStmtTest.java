@@ -2,9 +2,6 @@ package interpreter.model.stmt;
 
 import interpreter.exceptions.MyException;
 import interpreter.model.PrgState;
-import interpreter.model.adt.MyDictionary;
-import interpreter.model.adt.MyList;
-import interpreter.model.adt.MyStack;
 import interpreter.model.exp.ValueExp;
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.IntValue;
@@ -16,12 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class IfStmtTest {
 
     private PrgState createState() {
-        PrgState state = new PrgState(
-                new MyStack<>(),
-                new MyDictionary<>(),
-                new MyList<>(),
-                new NopStmt()
-        );
+        PrgState state = PrgState.of(new NopStmt());
 
         // Remove the original NopStmt so the stack starts empty.
         try {
