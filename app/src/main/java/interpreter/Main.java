@@ -1,59 +1,51 @@
 package interpreter;
 
 import interpreter.controller.Controller;
-import interpreter.exceptions.MyException;
 import interpreter.model.PrgState;
 import interpreter.repository.Repository;
+import interpreter.view.Command;
+import interpreter.view.ExitCommand;
 import interpreter.view.Examples;
+import interpreter.view.RunExampleCommand;
+import interpreter.view.TextMenu;
 
-import java.util.Scanner;
+import java.util.List;
 
 public class Main {
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        boolean running = true;
 
-        while (running) {
-            System.out.println("\n=== Toy Interpreter ===");
-            System.out.println("1. Run example 1 (prints 2)");
-            System.out.println("2. Run example 2 (prints 18)");
-            System.out.println("3. Run example 3 (prints 2)");
-            System.out.println("0. Exit");
-            System.out.print("Choose an option: ");
+        List<PrgState> programs = List.of(
+                Examples.example1(),
+                Examples.example2(),
+                Examples.example3(),
+                Examples.example4(),
+                Examples.example5()
+        );
 
-            String choice = scanner.nextLine().trim();
+        TextMenu menu = new TextMenu();
 
-            try {
-                switch (choice) {
-                    case "1" -> runExample(Examples.example1());
-                    case "2" -> runExample(Examples.example2());
-                    case "3" -> runExample(Examples.example3());
-                    case "0" -> {
-                        running = false;
-                        System.out.println("Goodbye!");
-                    }
-                    default -> System.out.println("Invalid option. Please choose 0, 1, 2, or 3.");
-                }
-            } catch (MyException e) {
-                System.out.println("Interpreter error: " + e.getMessage());
-            } catch (RuntimeException e) {
-                System.out.println("Error: " + e.getMessage());
-            }
+        menu.addCommand(new ExitCommand("0", "exit"));
+
+        for (int i = 0; i < programs.size(); i++) {
+            PrgState state = programs.get(i);
+
+            Repository repository = new Repository(
+                    state,
+                    "log" + (i + 1) + ".txt"
+            );
+
+            Controller controller = new Controller(repository);
+
+            menu.addCommand(
+                    new RunExampleCommand(
+                            String.valueOf(i + 1),
+                            state.getOriginalProgram().toString(),
+                            controller
+                    )
+            );
         }
 
-        scanner.close();
-    }
-
-    private static void runExample(PrgState state) throws MyException {
-        Repository repository = new Repository(state);
-        Controller controller = new Controller(repository);
-
-        controller.allStep();
-
-        PrgState result = repository.getCrtPrg();
-
-        System.out.println("Output: " + result.getOut());
-        System.out.println("Final state:");
-        System.out.println(result);
+        menu.show();
     }
 }

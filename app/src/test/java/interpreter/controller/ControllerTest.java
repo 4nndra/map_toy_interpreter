@@ -42,7 +42,7 @@ class ControllerTest {
         PrgState state = Examples.example1();
         state.getExeStack().pop();
 
-        Controller controller = new Controller(new Repository(state));
+        Controller controller = new Controller(new Repository(state, "test_log.txt"));
 
         assertThrows(
                 StatementException.class,
@@ -51,7 +51,7 @@ class ControllerTest {
     }
 
     private PrgState runExample(PrgState state) throws Exception {
-        Controller controller = new Controller(new Repository(state));
+        Controller controller = new Controller(new Repository(state, "test_log.txt"));
         controller.allStep();
         return state;
     }

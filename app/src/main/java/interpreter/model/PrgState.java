@@ -64,11 +64,16 @@ public class PrgState {
         return originalProgram;
     }
 
+    public String toLogString() {
+        return "ExeStack:\n" + exeStack
+                + "\nSymTable:\n" + symTable
+                + "\nOut:\n" + out
+                + "\nFileTable:\n" + fileTable
+                + "\n";
+    }
+
     @Override
     public String toString() {
-        return "ExeStack: " + exeStack
-                + "\nSymTable: " + symTable
-                + "\nOut: " + out
-                + "\nFileTable: " + fileTable;
+        return toLogString();
     }
 }

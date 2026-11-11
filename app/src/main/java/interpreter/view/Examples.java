@@ -1,5 +1,7 @@
 package interpreter.view;
 
+import interpreter.model.type.StringType;
+import interpreter.model.value.StringValue;
 import interpreter.model.PrgState;
 import interpreter.model.exp.*;
 import interpreter.model.stmt.*;
@@ -66,6 +68,65 @@ public class Examples {
                                                 new AssignStmt("v", new ValueExp(new IntValue(3)))
                                         ),
                                         new PrintStmt(new VarExp("v"))
+                                )
+                        )
+                )
+        );
+
+        return createState(program);
+    }
+
+    public static IStmt fileExample(String fileName) {
+        return new CompStmt(
+                new VarDeclStmt("varf", new StringType()),
+                new CompStmt(
+                        new AssignStmt("varf",
+                                new ValueExp(new StringValue(fileName))),
+                        new CompStmt(
+                                new OpenRFileStmt(new VarExp("varf")),
+                                new CompStmt(
+                                        new VarDeclStmt("varc", new IntType()),
+                                        new CompStmt(
+                                                new ReadFileStmt(new VarExp("varf"), "varc"),
+                                                new CompStmt(
+                                                        new PrintStmt(new VarExp("varc")),
+                                                        new CompStmt(
+                                                                new ReadFileStmt(new VarExp("varf"), "varc"),
+                                                                new CompStmt(
+                                                                        new PrintStmt(new VarExp("varc")),
+                                                                        new CloseRFileStmt(new VarExp("varf"))
+                                                                )
+                                                        )
+                                                )
+                                        )
+                                )
+                        )
+                )
+        );
+    }
+
+    public static PrgState example4() {
+        return createState(fileExample("test.in"));
+    }
+
+    public static PrgState example5() {
+        IStmt program = new CompStmt(
+                new VarDeclStmt("a", new IntType()),
+                new CompStmt(
+                        new VarDeclStmt("b", new IntType()),
+                        new CompStmt(
+                                new AssignStmt("a", new ValueExp(new IntValue(5))),
+                                new CompStmt(
+                                        new AssignStmt("b", new ValueExp(new IntValue(7))),
+                                        new IfStmt(
+                                                new RelationalExp(
+                                                        RelOp.LT,
+                                                        new VarExp("a"),
+                                                        new VarExp("b")
+                                                ),
+                                                new PrintStmt(new VarExp("a")),
+                                                new PrintStmt(new VarExp("b"))
+                                        )
                                 )
                         )
                 )

@@ -42,3 +42,8 @@ tasks.named<Test>("test") {
 tasks.named<JavaExec>("run") {
     standardInput = System.`in`
 }
+
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+    workingDir = rootDir
+}

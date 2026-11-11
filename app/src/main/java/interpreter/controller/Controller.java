@@ -29,11 +29,15 @@ public class Controller {
             throw new StatementException("No program state available");
         }
 
+        repository.logPrgStateExec();
+
         System.out.println("Initial state:");
         System.out.println(state);
 
         while (!state.getExeStack().isEmpty()) {
             oneStep(state);
+
+            repository.logPrgStateExec();
 
             System.out.println("\nState after step:");
             System.out.println(state);
