@@ -1,3 +1,17 @@
+# Gradle
+.gradle/
+**/build/
+
+# IDE
+.idea/
+
+# macOS
+.DS_Store
+
+# Generated logs
 *.log
 log*.txt
+test_log.txt
+
+# Local test input
 app/test.in
