@@ -107,4 +107,16 @@ class ReadFileStmtTest {
 
         state.getFileTable().lookup(fileName).close();
     }
+
+    @Test
+    void testFilenameMustBeString() {
+        PrgState state = PrgState.of(new NopStmt());
+        state.getSymTable().put("x", new IntValue(0));
+
+        assertThrows(StatementException.class,
+                () -> new ReadFileStmt(
+                        new ValueExp(new IntValue(10)), "x"
+                ).execute(state));
+    }
+
 }

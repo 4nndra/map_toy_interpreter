@@ -12,13 +12,30 @@ public class TextMenu {
     }
 
     private void printMenu() {
-        for (Command command : commands.values()) {
-            System.out.printf(
-                    "%4s : %s%n",
-                    command.getKey(),
-                    command.getDescription()
-            );
+        System.out.println();
+        System.out.println("          A3 - TOY INTERPRETER");
+        System.out.println("------------------------------------------");
+        System.out.println(" Select a program to execute:\n");
+
+        for (Command c : commands.values()) {
+            if (c.getKey().equals("0")) {
+                System.out.println(" [0]  Exit");
+            } else {
+                String description = switch (c.getKey()) {
+                    case "1" -> "Basic variable declaration and print";
+                    case "2" -> "Arithmetic expressions";
+                    case "3" -> "Boolean expressions and conditions";
+                    case "4" -> "File operations";
+                    case "5" -> "Relational expressions";
+                    default -> c.getDescription();
+                };
+
+                System.out.printf(" [%s]  %s%n", c.getKey(), description);
+            }
         }
+
+        System.out.println("------------------------------------------");
+        System.out.print(" Your choice: ");
     }
 
     public void show() {
@@ -26,7 +43,6 @@ public class TextMenu {
 
         while (true) {
             printMenu();
-            System.out.print("Input the option: ");
 
             Command command = commands.get(scanner.nextLine().trim());
 

@@ -65,11 +65,26 @@ public class PrgState {
     }
 
     public String toLogString() {
-        return "ExeStack:\n" + exeStack
-                + "\nSymTable:\n" + symTable
-                + "\nOut:\n" + out
-                + "\nFileTable:\n" + fileTable
-                + "\n";
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("ExeStack:\n");
+        exeStack.toList().forEach(s ->
+                sb.append(s).append('\n'));
+
+        sb.append("SymTable:\n");
+        symTable.toMap().forEach((key, value) ->
+                sb.append(key).append(" --> ")
+                        .append(value).append('\n'));
+
+        sb.append("Out:\n");
+        out.toList().forEach(value ->
+                sb.append(value).append('\n'));
+
+        sb.append("FileTable:\n");
+        fileTable.toMap().keySet().forEach(file ->
+                sb.append(file.getValue()).append('\n'));
+
+        return sb.toString();
     }
 
     @Override

@@ -31,4 +31,9 @@ public class BoolValue implements IValue {
         }
         return value == other.value;
     }
+
+    @Override
+    public int hashCode() {
+        return Boolean.hashCode(value);
+    }
 }

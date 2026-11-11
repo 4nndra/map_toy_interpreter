@@ -31,4 +31,9 @@ public class IntValue implements IValue {
         }
         return value == other.value;
     }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(value);
+    }
 }
