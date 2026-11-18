@@ -7,6 +7,7 @@ import interpreter.model.value.BoolValue;
 import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
 
+// Evaluates two operands and produces a boolean comparison result.
 public class RelationalExp implements IExp {
     private final RelOp op;
     private final IExp left;
@@ -19,6 +20,7 @@ public class RelationalExp implements IExp {
     }
 
     @Override
+    // Evaluates the expression against the current symbol table.
     public IValue eval(IDictionary<String, IValue> symTable)
             throws MyException {
 
@@ -51,6 +53,7 @@ public class RelationalExp implements IExp {
     }
 
     @Override
+    // Returns a readable representation of this object.
     public String toString() {
         return "(" + left + " " + op + " " + right + ")";
     }

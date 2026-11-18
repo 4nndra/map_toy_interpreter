@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+// Stores program states and persists each execution step to a log file.
 public class Repository implements IRepository {
     private List<PrgState> programs;
     private final String logFilePath;
@@ -20,6 +21,7 @@ public class Repository implements IRepository {
     }
 
     @Override
+    // Returns the currently executing program state.
     public PrgState getCrtPrg() {
         if (programs.isEmpty()) {
             return null;
@@ -28,16 +30,19 @@ public class Repository implements IRepository {
     }
 
     @Override
+    // Returns all program states managed by the repository.
     public List<PrgState> getPrgList() {
         return programs;
     }
 
     @Override
+    // Replaces the repository program-state list.
     public void setPrgList(List<PrgState> states) {
         this.programs = states;
     }
 
     @Override
+    // Writes the current program state to the repository log file.
     public void logPrgStateExec() throws RepositoryException {
         try (BufferedWriter writer =
                      new BufferedWriter(new FileWriter(logFilePath, true))) {

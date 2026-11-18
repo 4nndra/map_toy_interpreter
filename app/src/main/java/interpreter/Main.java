@@ -11,8 +11,10 @@ import interpreter.view.TextMenu;
 
 import java.util.List;
 
+// Application entry point: registers examples and starts the text menu.
 public class Main {
 
+    // Starts the interpreter, registers example programs and shows the menu.
     public static void main(String[] args) {
 
         List<PrgState> programs = List.of(

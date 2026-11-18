@@ -6,6 +6,7 @@ import interpreter.model.adt.IList;
 import interpreter.model.adt.MyStack;
 import interpreter.model.adt.MyDictionary;
 import interpreter.model.adt.MyList;
+import interpreter.model.adt.FileTable;
 import interpreter.model.stmt.IStmt;
 import interpreter.model.value.IValue;
 import interpreter.model.value.StringValue;
@@ -16,13 +17,14 @@ public class PrgState {
     private final IStack<IStmt> exeStack;
     private final IDictionary<String, IValue> symTable;
     private final IList<IValue> out;
-    private final IDictionary<StringValue, BufferedReader> fileTable;
+    private final FileTable fileTable;
     private final IStmt originalProgram;
 
+    // A program state groups the execution stack, symbol table, output and open files.
     public PrgState(IStack<IStmt> exeStack,
                     IDictionary<String, IValue> symTable,
                     IList<IValue> out,
-                    IDictionary<StringValue, BufferedReader> fileTable,
+                    FileTable fileTable,
                     IStmt originalProgram) {
 
         this.exeStack = exeStack;
@@ -31,39 +33,63 @@ public class PrgState {
         this.fileTable = fileTable;
         this.originalProgram = originalProgram;
 
+        // Always begin execution with the original program on the execution stack.
         this.exeStack.push(originalProgram);
     }
 
+    // Compatibility overload for repositories or tests using a plain dictionary.
+    public PrgState(IStack<IStmt> exeStack,
+                    IDictionary<String, IValue> symTable,
+                    IList<IValue> out,
+                    IDictionary<StringValue, BufferedReader> fileTable,
+                    IStmt originalProgram) {
+        this(exeStack, symTable, out, copyFileTable(fileTable), originalProgram);
+    }
+
+    // Converts a general dictionary into the typed FileTable used by program states.
+    private static FileTable copyFileTable(IDictionary<StringValue, BufferedReader> source) {
+        FileTable result = new FileTable();
+        source.toMap().forEach(result::put);
+        return result;
+    }
+
+    // Creates a fresh program state initialized for the given program.
     public static PrgState of(IStmt program) {
         return new PrgState(
                 new MyStack<>(),
                 new MyDictionary<>(),
                 new MyList<>(),
-                new MyDictionary<>(),
+                new FileTable(),
                 program
         );
     }
 
+    // Returns the exe stack.
     public IStack<IStmt> getExeStack() {
         return exeStack;
     }
 
+    // Returns the sym table.
     public IDictionary<String, IValue> getSymTable() {
         return symTable;
     }
 
+    // Returns the out.
     public IList<IValue> getOut() {
         return out;
     }
 
-    public IDictionary<StringValue, BufferedReader> getFileTable() {
+    // Returns the file table.
+    public FileTable getFileTable() {
         return fileTable;
     }
 
+    // Returns the original program.
     public IStmt getOriginalProgram() {
         return originalProgram;
     }
 
+    // Formats the execution stack, symbol table, output and file table for logging.
     public String toLogString() {
         StringBuilder sb = new StringBuilder();
 
@@ -88,7 +114,9 @@ public class PrgState {
     }
 
     @Override
+    // Returns a readable representation of this object.
     public String toString() {
+        // Formats the execution stack, symbol table, output and file table for logging.
         return toLogString();
     }
 }

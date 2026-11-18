@@ -11,6 +11,7 @@ import interpreter.model.value.StringValue;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+// Reads the next integer from an open file and updates a symbol-table variable.
 public class ReadFileStmt implements IStmt {
     private final IExp exp;
     private final String varName;
@@ -21,6 +22,7 @@ public class ReadFileStmt implements IStmt {
     }
 
     @Override
+    // Executes this statement and returns the updated program state.
     public PrgState execute(PrgState state) throws MyException {
         if (!state.getSymTable().isDefined(varName)) {
             throw new StatementException(
@@ -67,6 +69,7 @@ public class ReadFileStmt implements IStmt {
     }
 
     @Override
+    // Returns a readable representation of this object.
     public String toString() {
         return "readFile(" + exp + ", " + varName + ")";
     }

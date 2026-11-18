@@ -13,6 +13,7 @@ public class Controller {
         this.repository = repository;
     }
 
+    // Pops and executes exactly one statement from the execution stack.
     public PrgState oneStep(PrgState state) throws MyException {
         if (state == null || state.getExeStack().isEmpty()) {
             throw new StatementException("Program execution stack is empty");
@@ -22,6 +23,7 @@ public class Controller {
         return currentStatement.execute(state);
     }
 
+    // Logs the complete execution: the initial state and every state after one step.
     public void allStep() throws MyException {
         PrgState state = repository.getCrtPrg();
 
@@ -35,6 +37,7 @@ public class Controller {
         System.out.println(state);
 
         while (!state.getExeStack().isEmpty()) {
+            // Pops and executes exactly one statement from the execution stack.
             oneStep(state);
 
             repository.logPrgStateExec();

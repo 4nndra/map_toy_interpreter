@@ -1,5 +1,6 @@
 package interpreter.view;
 
+// Menu command that terminates the interpreter.
 public class ExitCommand extends Command {
 
     public ExitCommand(String key, String description) {
@@ -7,6 +8,7 @@ public class ExitCommand extends Command {
     }
 
     @Override
+    // Executes this statement and returns the updated program state.
     public void execute() {
         System.exit(0);
     }

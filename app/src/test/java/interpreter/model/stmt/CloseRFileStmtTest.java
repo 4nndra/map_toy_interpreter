@@ -18,6 +18,7 @@ class CloseRFileStmtTest {
     @TempDir
     Path tempDir;
 
+    // Test: verifies test close open file.
     @Test
     void testCloseOpenFile() throws Exception {
         Path file = tempDir.resolve("test.in");
@@ -33,6 +34,7 @@ class CloseRFileStmtTest {
         assertFalse(state.getFileTable().isDefined(fileName));
     }
 
+    // Test: verifies test close file that is not open.
     @Test
     void testCloseFileThatIsNotOpen() {
         PrgState state = PrgState.of(new NopStmt());
@@ -43,6 +45,7 @@ class CloseRFileStmtTest {
                 ).execute(state));
     }
 
+    // Test: verifies test filename must be string.
     @Test
     void testFilenameMustBeString() {
         PrgState state = PrgState.of(new NopStmt());

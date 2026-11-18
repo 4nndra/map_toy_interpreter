@@ -20,6 +20,7 @@ class OpenRFileStmtTest {
     @TempDir
     Path tempDir;
 
+    // Test: verifies test open existing file.
     @Test
     void testOpenExistingFile() throws Exception {
         Path file = tempDir.resolve("test.in");
@@ -36,6 +37,7 @@ class OpenRFileStmtTest {
         state.getFileTable().lookup(fileName).close();
     }
 
+    // Test: verifies test open same file twice.
     @Test
     void testOpenSameFileTwice() throws Exception {
         Path file = tempDir.resolve("test.in");
@@ -52,6 +54,7 @@ class OpenRFileStmtTest {
         state.getFileTable().lookup(fileName).close();
     }
 
+    // Test: verifies test open nonexistent file.
     @Test
     void testOpenNonexistentFile() {
         Path file = tempDir.resolve("missing.in");
@@ -64,6 +67,7 @@ class OpenRFileStmtTest {
                 ).execute(state));
     }
 
+    // Test: verifies test filename must be string.
     @Test
     void testFilenameMustBeString() {
         PrgState state = PrgState.of(new NopStmt());

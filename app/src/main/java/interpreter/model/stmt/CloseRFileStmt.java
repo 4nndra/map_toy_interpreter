@@ -10,6 +10,7 @@ import interpreter.model.value.StringValue;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+// Closes an open file and removes it from the program's FileTable.
 public class CloseRFileStmt implements IStmt {
     private final IExp exp;
 
@@ -18,6 +19,7 @@ public class CloseRFileStmt implements IStmt {
     }
 
     @Override
+    // Executes this statement and returns the updated program state.
     public PrgState execute(PrgState state) throws MyException {
         IValue value = exp.eval(state.getSymTable());
 
@@ -50,6 +52,7 @@ public class CloseRFileStmt implements IStmt {
     }
 
     @Override
+    // Returns a readable representation of this object.
     public String toString() {
         return "closeRFile(" + exp + ")";
     }

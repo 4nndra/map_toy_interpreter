@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+// Opens a readable file and records its reader in the program's FileTable.
 public class OpenRFileStmt implements IStmt {
     private final IExp exp;
 
@@ -19,6 +20,7 @@ public class OpenRFileStmt implements IStmt {
     }
 
     @Override
+    // Executes this statement and returns the updated program state.
     public PrgState execute(PrgState state) throws MyException {
         IValue value = exp.eval(state.getSymTable());
 
@@ -51,6 +53,7 @@ public class OpenRFileStmt implements IStmt {
     }
 
     @Override
+    // Returns a readable representation of this object.
     public String toString() {
         return "openRFile(" + exp + ")";
     }

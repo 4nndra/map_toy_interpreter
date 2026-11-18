@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RelationalExpTest {
 
+    // Helper: supports evaluate setup for test cases.
     private BoolValue evaluate(RelOp op, int a, int b)
             throws Exception {
         RelationalExp exp = new RelationalExp(
@@ -22,6 +23,7 @@ class RelationalExpTest {
         return (BoolValue) exp.eval(new MyDictionary<>());
     }
 
+    // Test: verifies tests all relational operators.
     @Test
     void testsAllRelationalOperators() throws Exception {
         assertTrue(evaluate(RelOp.LT, 2, 5).getValue());
@@ -43,6 +45,7 @@ class RelationalExpTest {
         assertFalse(evaluate(RelOp.GE, 2, 5).getValue());
     }
 
+    // Test: verifies non integer operand throws expression exception.
     @Test
     void nonIntegerOperandThrowsExpressionException() {
         RelationalExp exp = new RelationalExp(

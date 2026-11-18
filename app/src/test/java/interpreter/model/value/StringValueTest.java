@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StringValueTest {
 
+    // Test: verifies string type has empty default value.
     @Test
     void stringTypeHasEmptyDefaultValue() {
         StringType type = new StringType();
@@ -14,6 +15,7 @@ class StringValueTest {
         assertEquals(new StringValue(""), type.defaultValue());
     }
 
+    // Test: verifies equal string values are equal.
     @Test
     void equalStringValuesAreEqual() {
         StringValue first = new StringValue("hello");
@@ -22,6 +24,7 @@ class StringValueTest {
         assertEquals(first, second);
     }
 
+    // Test: verifies equal string values have same hash code.
     @Test
     void equalStringValuesHaveSameHashCode() {
         StringValue first = new StringValue("hello");

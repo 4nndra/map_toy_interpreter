@@ -20,6 +20,7 @@ class ReadFileStmtTest {
     @TempDir
     Path tempDir;
 
+    // Test: verifies test read integer.
     @Test
     void testReadInteger() throws Exception {
         Path file = tempDir.resolve("test.in");
@@ -38,6 +39,7 @@ class ReadFileStmtTest {
         state.getFileTable().lookup(fileName).close();
     }
 
+    // Test: verifies test read at end of file.
     @Test
     void testReadAtEndOfFile() throws Exception {
         Path file = tempDir.resolve("test.in");
@@ -57,6 +59,7 @@ class ReadFileStmtTest {
         state.getFileTable().lookup(fileName).close();
     }
 
+    // Test: verifies test read into undeclared variable.
     @Test
     void testReadIntoUndeclaredVariable() {
         PrgState state = PrgState.of(new NopStmt());
@@ -67,6 +70,7 @@ class ReadFileStmtTest {
                 ).execute(state));
     }
 
+    // Test: verifies test read into non integer variable.
     @Test
     void testReadIntoNonIntegerVariable() {
         PrgState state = PrgState.of(new NopStmt());
@@ -78,6 +82,7 @@ class ReadFileStmtTest {
                 ).execute(state));
     }
 
+    // Test: verifies test read from closed file.
     @Test
     void testReadFromClosedFile() {
         PrgState state = PrgState.of(new NopStmt());
@@ -89,6 +94,7 @@ class ReadFileStmtTest {
                 ).execute(state));
     }
 
+    // Test: verifies test read invalid integer.
     @Test
     void testReadInvalidInteger() throws Exception {
         Path file = tempDir.resolve("test.in");
@@ -108,6 +114,7 @@ class ReadFileStmtTest {
         state.getFileTable().lookup(fileName).close();
     }
 
+    // Test: verifies test filename must be string.
     @Test
     void testFilenameMustBeString() {
         PrgState state = PrgState.of(new NopStmt());
