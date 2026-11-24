@@ -7,34 +7,49 @@ import interpreter.model.adt.MyStack;
 import interpreter.model.adt.MyDictionary;
 import interpreter.model.adt.MyList;
 import interpreter.model.adt.FileTable;
+import interpreter.model.adt.IHeap;
+import interpreter.model.adt.MyHeap;
 import interpreter.model.stmt.IStmt;
 import interpreter.model.value.IValue;
 import interpreter.model.value.StringValue;
 
 import java.io.BufferedReader;
+import java.util.TreeMap;
 
 public class PrgState {
     private final IStack<IStmt> exeStack;
     private final IDictionary<String, IValue> symTable;
     private final IList<IValue> out;
     private final FileTable fileTable;
+    private final IHeap heap;
     private final IStmt originalProgram;
 
-    // A program state groups the execution stack, symbol table, output and open files.
+    // A program state groups the execution structures, including open files and heap.
     public PrgState(IStack<IStmt> exeStack,
                     IDictionary<String, IValue> symTable,
                     IList<IValue> out,
                     FileTable fileTable,
+                    IHeap heap,
                     IStmt originalProgram) {
 
         this.exeStack = exeStack;
         this.symTable = symTable;
         this.out = out;
         this.fileTable = fileTable;
+        this.heap = heap;
         this.originalProgram = originalProgram;
 
         // Always begin execution with the original program on the execution stack.
         this.exeStack.push(originalProgram);
+    }
+
+    // Preserves the previous constructor while creating an empty heap.
+    public PrgState(IStack<IStmt> exeStack,
+                    IDictionary<String, IValue> symTable,
+                    IList<IValue> out,
+                    FileTable fileTable,
+                    IStmt originalProgram) {
+        this(exeStack, symTable, out, fileTable, new MyHeap(), originalProgram);
     }
 
     // Compatibility overload for repositories or tests using a plain dictionary.
@@ -60,6 +75,7 @@ public class PrgState {
                 new MyDictionary<>(),
                 new MyList<>(),
                 new FileTable(),
+                new MyHeap(),
                 program
         );
     }
@@ -82,6 +98,11 @@ public class PrgState {
     // Returns the file table.
     public FileTable getFileTable() {
         return fileTable;
+    }
+
+    // Returns the program's heap.
+    public IHeap getHeap() {
+        return heap;
     }
 
     // Returns the original program.
@@ -109,6 +130,10 @@ public class PrgState {
         sb.append("FileTable:\n");
         fileTable.toMap().keySet().forEach(file ->
                 sb.append(file.getValue()).append('\n'));
+
+        sb.append("Heap:\n");
+        new TreeMap<>(heap.getContent()).forEach((address, value) ->
+                sb.append(address).append(" --> ").append(value).append('\n'));
 
         return sb.toString();
     }
