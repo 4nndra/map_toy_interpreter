@@ -3,6 +3,7 @@ package interpreter.model.exp;
 import interpreter.exceptions.ExpressionException;
 import interpreter.exceptions.MyException;
 import interpreter.model.adt.MyDictionary;
+import interpreter.model.adt.MyHeap;
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
@@ -24,7 +25,7 @@ class ArithExpTest {
                 new ValueExp(new IntValue(3))
         );
 
-        assertEquals(new IntValue(5), exp.eval(createSymTable()));
+        assertEquals(new IntValue(5), exp.eval(createSymTable(), new MyHeap()));
     }
 
     @Test
@@ -35,7 +36,7 @@ class ArithExpTest {
                 new ValueExp(new IntValue(3))
         );
 
-        assertEquals(new IntValue(4), exp.eval(createSymTable()));
+        assertEquals(new IntValue(4), exp.eval(createSymTable(), new MyHeap()));
     }
 
     @Test
@@ -46,7 +47,7 @@ class ArithExpTest {
                 new ValueExp(new IntValue(3))
         );
 
-        assertEquals(new IntValue(12), exp.eval(createSymTable()));
+        assertEquals(new IntValue(12), exp.eval(createSymTable(), new MyHeap()));
     }
 
     @Test
@@ -57,7 +58,7 @@ class ArithExpTest {
                 new ValueExp(new IntValue(2))
         );
 
-        assertEquals(new IntValue(4), exp.eval(createSymTable()));
+        assertEquals(new IntValue(4), exp.eval(createSymTable(), new MyHeap()));
     }
 
     @Test
@@ -70,7 +71,7 @@ class ArithExpTest {
 
         assertThrows(
                 ExpressionException.class,
-                () -> exp.eval(createSymTable())
+                () -> exp.eval(createSymTable(), new MyHeap())
         );
     }
 
@@ -84,7 +85,7 @@ class ArithExpTest {
 
         assertThrows(
                 ExpressionException.class,
-                () -> exp.eval(createSymTable())
+                () -> exp.eval(createSymTable(), new MyHeap())
         );
     }
 }

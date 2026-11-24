@@ -21,7 +21,7 @@ public class CloseRFileStmt implements IStmt {
     @Override
     // Executes this statement and returns the updated program state.
     public PrgState execute(PrgState state) throws MyException {
-        IValue value = exp.eval(state.getSymTable());
+        IValue value = exp.eval(state.getSymTable(), state.getHeap());
 
         if (!(value instanceof StringValue)) {
             throw new StatementException(

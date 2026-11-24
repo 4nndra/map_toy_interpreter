@@ -36,7 +36,7 @@ public class ReadFileStmt implements IStmt {
             );
         }
 
-        IValue value = exp.eval(state.getSymTable());
+        IValue value = exp.eval(state.getSymTable(), state.getHeap());
 
         if (!(value instanceof StringValue)) {
             throw new StatementException(

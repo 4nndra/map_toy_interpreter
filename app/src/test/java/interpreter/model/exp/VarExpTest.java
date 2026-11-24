@@ -3,6 +3,7 @@ package interpreter.model.exp;
 import interpreter.exceptions.ExpressionException;
 import interpreter.exceptions.MyException;
 import interpreter.model.adt.MyDictionary;
+import interpreter.model.adt.MyHeap;
 import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ class VarExpTest {
 
         VarExp exp = new VarExp("x");
 
-        assertEquals(new IntValue(10), exp.eval(symTable));
+        assertEquals(new IntValue(10), exp.eval(symTable, new MyHeap()));
     }
 
     @Test
@@ -31,7 +32,7 @@ class VarExpTest {
 
         assertThrows(
                 ExpressionException.class,
-                () -> exp.eval(createSymTable())
+                () -> exp.eval(createSymTable(), new MyHeap())
         );
     }
 }

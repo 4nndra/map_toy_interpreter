@@ -3,6 +3,7 @@ package interpreter.model.exp;
 import interpreter.exceptions.ExpressionException;
 import interpreter.exceptions.MyException;
 import interpreter.model.adt.IDictionary;
+import interpreter.model.adt.IHeap;
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
@@ -21,11 +22,11 @@ public class RelationalExp implements IExp {
 
     @Override
     // Evaluates the expression against the current symbol table.
-    public IValue eval(IDictionary<String, IValue> symTable)
+    public IValue eval(IDictionary<String, IValue> symTable, IHeap heap)
             throws MyException {
 
-        IValue v1 = left.eval(symTable);
-        IValue v2 = right.eval(symTable);
+        IValue v1 = left.eval(symTable, heap);
+        IValue v2 = right.eval(symTable, heap);
 
         if (!(v1 instanceof IntValue int1)) {
             throw new ExpressionException(

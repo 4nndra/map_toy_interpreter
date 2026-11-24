@@ -2,6 +2,7 @@ package interpreter.model.exp;
 
 import interpreter.exceptions.ExpressionException;
 import interpreter.model.adt.MyDictionary;
+import interpreter.model.adt.MyHeap;
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.IntValue;
 import interpreter.model.value.StringValue;
@@ -20,7 +21,7 @@ class RelationalExpTest {
                 new ValueExp(new IntValue(b))
         );
 
-        return (BoolValue) exp.eval(new MyDictionary<>());
+        return (BoolValue) exp.eval(new MyDictionary<>(), new MyHeap());
     }
 
     // Test: verifies tests all relational operators.
@@ -56,7 +57,7 @@ class RelationalExpTest {
 
         assertThrows(
                 ExpressionException.class,
-                () -> exp.eval(new MyDictionary<>())
+                () -> exp.eval(new MyDictionary<>(), new MyHeap())
         );
     }
 }

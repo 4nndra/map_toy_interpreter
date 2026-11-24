@@ -3,6 +3,7 @@ package interpreter.model.exp;
 import interpreter.exceptions.ExpressionException;
 import interpreter.exceptions.MyException;
 import interpreter.model.adt.IDictionary;
+import interpreter.model.adt.IHeap;
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.IValue;
 
@@ -18,9 +19,9 @@ public class LogicExp implements IExp {
     }
 
     @Override
-    public IValue eval(IDictionary<String, IValue> symTable) throws MyException {
-        IValue v1 = e1.eval(symTable);
-        IValue v2 = e2.eval(symTable);
+    public IValue eval(IDictionary<String, IValue> symTable, IHeap heap) throws MyException {
+        IValue v1 = e1.eval(symTable, heap);
+        IValue v2 = e2.eval(symTable, heap);
 
         if (!(v1 instanceof BoolValue bool1) ||
                 !(v2 instanceof BoolValue bool2)) {

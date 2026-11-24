@@ -24,7 +24,7 @@ public class AssignStmt implements IStmt {
             );
         }
 
-        IValue value = exp.eval(state.getSymTable());
+        IValue value = exp.eval(state.getSymTable(), state.getHeap());
         IType declaredType = state.getSymTable().lookup(id).getType();
 
         if (!declaredType.equals(value.getType())) {

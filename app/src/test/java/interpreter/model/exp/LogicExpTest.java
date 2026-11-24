@@ -3,6 +3,7 @@ package interpreter.model.exp;
 import interpreter.exceptions.ExpressionException;
 import interpreter.exceptions.MyException;
 import interpreter.model.adt.MyDictionary;
+import interpreter.model.adt.MyHeap;
 import interpreter.model.value.BoolValue;
 import interpreter.model.value.IValue;
 import interpreter.model.value.IntValue;
@@ -24,7 +25,7 @@ class LogicExpTest {
                 new ValueExp(new BoolValue(true))
         );
 
-        assertEquals(new BoolValue(true), exp.eval(createSymTable()));
+        assertEquals(new BoolValue(true), exp.eval(createSymTable(), new MyHeap()));
     }
 
     @Test
@@ -35,7 +36,7 @@ class LogicExpTest {
                 new ValueExp(new BoolValue(false))
         );
 
-        assertEquals(new BoolValue(false), exp.eval(createSymTable()));
+        assertEquals(new BoolValue(false), exp.eval(createSymTable(), new MyHeap()));
     }
 
     @Test
@@ -46,7 +47,7 @@ class LogicExpTest {
                 new ValueExp(new BoolValue(true))
         );
 
-        assertEquals(new BoolValue(true), exp.eval(createSymTable()));
+        assertEquals(new BoolValue(true), exp.eval(createSymTable(), new MyHeap()));
     }
 
     @Test
@@ -57,7 +58,7 @@ class LogicExpTest {
                 new ValueExp(new BoolValue(false))
         );
 
-        assertEquals(new BoolValue(false), exp.eval(createSymTable()));
+        assertEquals(new BoolValue(false), exp.eval(createSymTable(), new MyHeap()));
     }
 
     @Test
@@ -70,7 +71,7 @@ class LogicExpTest {
 
         assertThrows(
                 ExpressionException.class,
-                () -> exp.eval(createSymTable())
+                () -> exp.eval(createSymTable(), new MyHeap())
         );
     }
 }
