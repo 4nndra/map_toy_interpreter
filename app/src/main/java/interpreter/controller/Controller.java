@@ -40,6 +40,15 @@ public class Controller {
             // Pops and executes exactly one statement from the execution stack.
             oneStep(state);
 
+            // Log the just-executed state before removing unreachable heap entries.
+            repository.logPrgStateExec();
+            state.getHeap().setContent(GarbageCollector.safeGarbageCollector(
+                    GarbageCollector.getAddrFromSymTable(
+                            state.getSymTable().toMap().values()
+                    ),
+                    state.getHeap().getContent()
+            ));
+            // Log again so the effects of garbage collection are visible.
             repository.logPrgStateExec();
 
             System.out.println("\nState after step:");
