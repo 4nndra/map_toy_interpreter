@@ -3,6 +3,9 @@ package interpreter.controller;
 import interpreter.exceptions.StatementException;
 import interpreter.model.PrgState;
 import interpreter.model.value.IntValue;
+import interpreter.model.value.RefValue;
+import interpreter.model.type.IntType;
+import interpreter.model.type.RefType;
 import interpreter.repository.Repository;
 import interpreter.view.Examples;
 import org.junit.jupiter.api.Test;
@@ -84,6 +87,62 @@ class ControllerTest {
         PrgState state = runExample(Examples.example5());
 
         assertEquals(new IntValue(5), state.getOut().get(0));
+    }
+
+    // Test: verifies Example 6 prints its reference values and builds the expected heap.
+    @Test
+    void example6PrintsReferencesAndBuildsHeap() throws Exception {
+        PrgState state = runExample(Examples.example6());
+
+        assertEquals(new RefValue(1, new IntType()), state.getOut().get(0));
+        assertEquals(new RefValue(2, new RefType(new IntType())), state.getOut().get(1));
+        assertEquals(new IntValue(20), state.getHeap().get(1));
+        assertEquals(new RefValue(1, new IntType()), state.getHeap().get(2));
+    }
+
+    // Test: verifies Example 7 prints values read through references.
+    @Test
+    void example7PrintsTwentyAndTwentyFive() throws Exception {
+        PrgState state = runExample(Examples.example7());
+
+        assertEquals(new IntValue(20), state.getOut().get(0));
+        assertEquals(new IntValue(25), state.getOut().get(1));
+    }
+
+    // Test: verifies Example 8 observes the value written to the heap.
+    @Test
+    void example8PrintsTwentyAndThirtyFive() throws Exception {
+        PrgState state = runExample(Examples.example8());
+
+        assertEquals(new IntValue(20), state.getOut().get(0));
+        assertEquals(new IntValue(35), state.getOut().get(1));
+        assertEquals(new IntValue(30), state.getHeap().get(1));
+    }
+
+    // Test: verifies Example 9 keeps the indirectly reachable first value.
+    @Test
+    void example9PrintsTwentyWithSafeCollection() throws Exception {
+        PrgState state = runExample(Examples.example9());
+
+        assertEquals(new IntValue(20), state.getOut().get(0));
+        assertEquals(new IntValue(20), state.getHeap().get(1));
+    }
+
+    // Test: verifies Example 10 prints each countdown value through zero.
+    @Test
+    void example10PrintsCountdownToZero() throws Exception {
+        PrgState state = runExample(Examples.example10());
+
+        assertEquals(
+                java.util.List.of(
+                        new IntValue(4),
+                        new IntValue(3),
+                        new IntValue(2),
+                        new IntValue(1),
+                        new IntValue(0)
+                ),
+                state.getOut().toList()
+        );
     }
 
     @Test
