@@ -18,4 +18,9 @@ public class IntType implements IType {
     public boolean equals(Object obj) {
         return obj instanceof IntType;
     }
+
+    @Override
+    public int hashCode() {
+        return IntType.class.hashCode();
+    }
 }

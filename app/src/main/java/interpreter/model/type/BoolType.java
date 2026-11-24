@@ -18,4 +18,9 @@ public class BoolType implements IType {
     public boolean equals(Object obj) {
         return obj instanceof BoolType;
     }
+
+    @Override
+    public int hashCode() {
+        return BoolType.class.hashCode();
+    }
 }
